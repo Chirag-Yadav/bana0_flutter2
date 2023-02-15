@@ -22,10 +22,10 @@ class _MyAppState extends State<MyApp> {
     final programs_response = await http.get(Uri.parse(
       'https://632017e19f82827dcf24a655.mockapi.io/api/programs',
     ));
-    var data = jsonDecode(programs_response.body.toString());
+    var programsdata = jsonDecode(programs_response.body.toString());
     if (programs_response.statusCode == 200) {
       setState(() {
-        programsList.addAll(data);
+        programsList.addAll(programsdata);
       });
       return programsList;
     } else {
@@ -40,10 +40,10 @@ class _MyAppState extends State<MyApp> {
     final lessons_response = await http.get(Uri.parse(
       'https://632017e19f82827dcf24a655.mockapi.io/api/lessons',
     ));
-    var data = jsonDecode(lessons_response.body.toString());
+    var lessondata = jsonDecode(lessons_response.body.toString());
     if (lessons_response.statusCode == 200) {
       setState(() {
-        lessonsList.addAll(data);
+        lessonsList.addAll(lessondata);
       });
       return lessonsList;
     } else {
@@ -366,16 +366,17 @@ class _MyAppState extends State<MyApp> {
                       width: double.infinity,
                       child: Row(
                         children: [
+                          SizedBox(width: 16.0,),
                           Expanded(
                               child: FutureBuilder(
                             future: getProgramsApi(),
                             builder: (context, AsyncSnapshot<Map> snapshot) {
-                              if (!snapshot.hasData) {
-                                return Center(child: Text('Loading...'));
-                              } else {
+                              // if (!snapshot.hasData) {
+                              //   return Center(child: Text('Loading...'));
+                              // } else {
                                 return ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: programsList.length,
+                                    itemCount: programsList['count'],
                                     itemBuilder: (context, index) {
                                       return Container(
                                         height: 280.0,
@@ -448,9 +449,10 @@ class _MyAppState extends State<MyApp> {
                                         ),
                                       );
                                     });
-                              }
+                              //}
                             },
                           )),
+                          SizedBox(width: 16.0,),
                         ],
                       ),
                     ),
@@ -507,16 +509,17 @@ class _MyAppState extends State<MyApp> {
                       width: double.infinity,
                       child: Row(
                         children: [
+                          SizedBox(width: 16.0,),
                           Expanded(
                               child: FutureBuilder(
                                 future: getProgramsApi(),
                                 builder: (context, AsyncSnapshot<Map> snapshot) {
-                                  if (!snapshot.hasData) {
-                                    return Center(child: Text('Loading...'));
-                                  } else {
+                                  // if (!snapshot.hasData) {
+                                  //   return Center(child: Text('Loading...'));
+                                  // } else {
                                     return ListView.builder(
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: lessonsList.length,
+                                        itemCount: lessonsList['count'],
                                         itemBuilder: (context, index) {
                                           return Container(
                                             height: 280.0,
@@ -597,12 +600,13 @@ class _MyAppState extends State<MyApp> {
                                                       ),
                                                     ],
                                                   ),
+                                                  SizedBox(width: 16.0,),
                                                 ],
                                               ),
                                             ),
                                           );
                                         });
-                                  }
+                                  // }
                                 },
                               )),
                         ],
